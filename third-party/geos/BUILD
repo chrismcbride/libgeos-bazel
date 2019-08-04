@@ -94,7 +94,7 @@ cc_library(
 indexPaths = [
     "bintree",
     "chain",
-    "intervaltree",
+    "intervalrtree",
     "quadtree",
     "strtree",
     "sweepline",
@@ -114,6 +114,7 @@ cc_library(
     copts = copts,
     defines = defines,
     includes = includes,
+    linkstatic = 1,
     deps = [":index/" + path for path in indexPaths],
 )
 
@@ -160,6 +161,7 @@ operationPaths = [
     "buffer",
     "distance",
     "intersection",
+    "linemerge",
     "overlay",
     "polygonize",
     "predicate",
@@ -267,14 +269,15 @@ cc_library(
         ":triangulate",
         ":util",
     ],
+    visibility = ["//visibility:public"],
 )
 
 # capi
 genrule(
-   name = "capi_header",
-   srcs = ["capi/geos_c.h.in"],
-   outs = ["capi/geos_c.h"],
-   cmd = "cp $< $@",
+    name = "capi_header",
+    srcs = ["capi/geos_c.h.in"],
+    outs = ["capi/geos_c.h"],
+    cmd = "cp $< $@",
 )
 
 cc_library(
@@ -287,4 +290,5 @@ cc_library(
     deps = [
         ":geos",
     ],
+    visibility = ["//visibility:public"],
 )
